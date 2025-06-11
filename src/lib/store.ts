@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import { SearchFilters } from '@/types/property';
 
 interface SearchStore {
@@ -10,6 +10,8 @@ interface SearchStore {
   toggleFavorite: (propertyId: string) => void;
   searchHistory: string[];
   addToSearchHistory: (city: string) => void;
+  isHydrated: boolean;
+  setHydrated: (state: boolean) => void;
 }
 
 const defaultFilters: SearchFilters = {
@@ -44,14 +46,20 @@ export const useSearchStore = create<SearchStore>()(
           const newHistory = [city, ...state.searchHistory.filter(c => c !== city)].slice(0, 10);
           return { searchHistory: newHistory };
         }),
+      isHydrated: false,
+      setHydrated: (state) => set({ isHydrated: state }),
     }),
     {
       name: 'search-store',
+      storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
         filters: state.filters,
         favoriteProperties: Array.from(state.favoriteProperties),
         searchHistory: state.searchHistory,
       }),
+      onRehydrateStorage: () => (state) => {
+        state?.setHydrated(true);
+      },
       merge: (persistedState: any, currentState) => ({
         ...currentState,
         ...persistedState,

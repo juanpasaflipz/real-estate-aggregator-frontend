@@ -1,6 +1,7 @@
 import { ApiResponse, Property, PropertyType, SearchFilters, UserPreferences } from '@/types/property';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://real-estate-api-7mln.onrender.com';
+// Use local API routes - temporarily use test endpoint
+const API_BASE_URL = '/api';
 
 // Updated API structure with enhanced fields
 interface ApiProperty {

@@ -15,8 +15,8 @@ interface PropertyCardProps {
 }
 
 export function PropertyCard({ property }: PropertyCardProps) {
-  const { favoriteProperties, toggleFavorite } = useSearchStore();
-  const isFavorite = favoriteProperties.has(property.id);
+  const { favoriteProperties, toggleFavorite, isHydrated } = useSearchStore();
+  const isFavorite = isHydrated ? favoriteProperties.has(property.id) : false;
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.preventDefault();
