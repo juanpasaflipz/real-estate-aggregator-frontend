@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: real-estate-aggregator
+    runtime: node
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false # You'll set this in Render dashboard
+      - key: NEXT_PUBLIC_API_URL
+        value: /api
+      - key: NEXT_PUBLIC_EXTERNAL_API_URL
+        sync: false # You'll set this in Render dashboard
+      - key: NEXT_PUBLIC_MAPBOX_TOKEN
+        sync: false # Optional - set if using maps
+      - key: NEXT_PUBLIC_GA_ID
+        sync: false # Optional - set if using Google Analytics
