@@ -15,9 +15,9 @@ import { formatCurrency } from '@/lib/utils';
 import { useSearchStore } from '@/lib/store';
 import { cn } from '@/lib/utils';
 
-export default function PropertyDetailsPage({ params }: { params: { id: string } }) {
+export default function PropertyDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
-  const propertyId = params.id;
+  const [propertyId, setPropertyId] = useState<string>('');
   const [property, setProperty] = useState<Property | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -28,6 +28,12 @@ export default function PropertyDetailsPage({ params }: { params: { id: string }
   const isFavorite = favoriteProperties.has(extractedId);
 
   useEffect(() => {
+    params.then(p => setPropertyId(p.id));
+  }, [params]);
+
+  useEffect(() => {
+    if (!propertyId) return;
+    
     const fetchProperty = async () => {
       try {
         setLoading(true);
@@ -46,7 +52,7 @@ export default function PropertyDetailsPage({ params }: { params: { id: string }
     };
 
     fetchProperty();
-  }, [extractedId]);
+  }, [extractedId, propertyId]);
 
   const handleShare = async () => {
     if (navigator.share) {

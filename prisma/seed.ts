@@ -1,4 +1,4 @@
-import { PrismaClient, PropertyType } from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
@@ -53,7 +53,7 @@ async function main() {
       bathrooms: 2.5,
       area: 120,
       areaUnit: 'm2',
-      type: PropertyType.apartment,
+      type: 'apartment',
       source: 'Database',
       sourceUrl: 'https://example.com/property/1',
       images: {
@@ -86,7 +86,7 @@ async function main() {
       bathrooms: 3,
       area: 280,
       areaUnit: 'm2',
-      type: PropertyType.house,
+      type: 'house',
       source: 'Database',
       sourceUrl: 'https://example.com/property/2',
       images: {
@@ -118,7 +118,7 @@ async function main() {
       bathrooms: 3.5,
       area: 250,
       areaUnit: 'm2',
-      type: PropertyType.apartment,
+      type: 'apartment',
       source: 'Database',
       sourceUrl: 'https://example.com/property/3',
       images: {

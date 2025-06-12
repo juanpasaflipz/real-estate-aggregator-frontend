@@ -6,11 +6,12 @@ export const runtime = 'nodejs'
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const property = await prisma.properties.findUnique({
-      where: { external_id: params.id },
+      where: { external_id: id },
       include: {
         property_images: {
           orderBy: { is_primary: 'desc' }
