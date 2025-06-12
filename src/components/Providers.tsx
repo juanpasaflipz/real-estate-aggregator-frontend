@@ -1,8 +1,12 @@
 'use client';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ReactNode, useState } from 'react';
+
+// Conditionally import ReactQueryDevtools only in development
+const ReactQueryDevtools = process.env.NODE_ENV === 'development' 
+  ? require('@tanstack/react-query-devtools').ReactQueryDevtools 
+  : () => null;
 
 export function Providers({ children }: { children: ReactNode }) {
   const [queryClient] = useState(
